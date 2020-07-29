@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Безгрешнов](https://up.htmlacademy.ru/ecmascript/12/user/1279727).
-* Наставник: `Неизвестно`.
+* Наставник: [Ксения Толстых](https://htmlacademy.ru/profile/id618277).
 
 ---
 
