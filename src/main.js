@@ -1,5 +1,3 @@
-'use strict'
-
 const FILMS_COUNT = 5;
 const EXTRA_FILMS_COUNT = 2;
 
@@ -257,12 +255,12 @@ const render = (container, template, place) => {
 const renderFilmCard = (container, cardsCount) => {
   for (let i = 0; i < cardsCount; i++) {
     render(container, createFilmCardTemplate(), `beforeend`);
-  };
+  }
 };
 
 const findContainerInExtraFilmsBlockByTitle = (title) => {
   return Array.from(document.querySelectorAll(`.films-list--extra`))
-    .filter(el => el.innerText.includes(title))[0];
+    .filter((el) => el.innerText.includes(title))[0];
 };
 
 const pageHeaderElement = document.querySelector(`.header`);
