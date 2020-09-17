@@ -1,5 +1,5 @@
-import { getFirstLastIndices } from "../utils/utils.js";
-import { getRandomInteger } from "./random.js";
+import {getFirstLastIndices} from "../utils/utils.js";
+import {getRandomInteger} from "./random.js";
 const FIELD_RATE = `rating`;
 const FIELD_COMMENTS_AMOUNT = `commentsAmount`;
 const MIN_RATING = `0.0`;
@@ -36,4 +36,4 @@ const findFilmsExtra = (filmCards) => {
   return new Map([[`Top rated`, getTopFilms(filmCards, FIELD_RATE)], [`Most commented`, getTopFilms(filmCards, FIELD_COMMENTS_AMOUNT)]]);
 };
 
-export { findFilmsExtra };
+export {findFilmsExtra};

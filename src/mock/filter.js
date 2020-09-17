@@ -1,4 +1,4 @@
-import { getWatchedFilms } from "../utils/utils";
+import {getWatchedFilms} from "../utils/utils";
 const filmCardToFilterMap = {
   watchlist: (filmCards) => getWatchedFilms(filmCards).length,
   history: (filmCards) => filmCards
@@ -15,4 +15,4 @@ const generateFilter = (filmCards) => {
     };
   });
 };
-export { generateFilter };
+export {generateFilter};

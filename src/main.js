@@ -1,21 +1,20 @@
-import { createFilmCardTemplate } from "./view/film-card.js";
-import { createProfileTemplate } from "./view/profile.js";
-import { createStatisticsFooterTemplate } from "./view/statistics-footer.js";
-import { createSortingTemplate } from "./view/sorting.js";
-import { createMainNavigationTemplate } from "./view/mainnavigation.js";
-import { createStatisticsItemTemplate } from "./view/statistics-item.js";
-import { createFilterTemplate } from "./view/filter.js";
-import { createFilmsTemplate } from "./view/films.js";
-import { createFilmsListTemplate } from "./view/films-list.js";
-import { createFilmsContainerTemplate } from "./view/films-container.js";
-import { createShowMoreButtonTemplate } from "./view/show-more-button.js";
-import { render } from "./utils/dom.js";
-import { generateFilmCard } from "./mock/film-card.js";
-import { createFilmsExtraTemplate } from "./view/films-extra.js";
-import { findFilmsExtra } from "./mock/films-extra.js";
-import { generateFilter } from "./mock/filter.js";
-import { generateStatistics } from "./mock/statistics.js";
-
+import {createFilmCardTemplate} from "./view/film-card.js";
+import {createProfileTemplate} from "./view/profile.js";
+import {createStatisticsFooterTemplate} from "./view/statistics-footer.js";
+import {createSortingTemplate} from "./view/sorting.js";
+import {createMainNavigationTemplate} from "./view/mainnavigation.js";
+import {createStatisticsItemTemplate} from "./view/statistics-item.js";
+import {createFilterTemplate} from "./view/filter.js";
+import {createFilmsTemplate} from "./view/films.js";
+import {createFilmsListTemplate} from "./view/films-list.js";
+import {createFilmsContainerTemplate} from "./view/films-container.js";
+import {createShowMoreButtonTemplate} from "./view/show-more-button.js";
+import {render} from "./utils/dom.js";
+import {generateFilmCard} from "./mock/film-card.js";
+import {createFilmsExtraTemplate} from "./view/films-extra.js";
+import {findFilmsExtra} from "./mock/films-extra.js";
+import {generateFilter} from "./mock/filter.js";
+import {generateStatistics} from "./mock/statistics.js";
 
 const FILMS_COUNT = 20;
 const FILMS_COUNT_PER_STEP = 5;
@@ -23,16 +22,11 @@ const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
 const filmCards = new Array(FILMS_COUNT).fill().map(generateFilmCard);
-
-console.log(filmCards);
-
 const extraFilmCards = findFilmsExtra(filmCards);
-// 111
 const filmAmount = filmCards.length;
 const filters = generateFilter(filmCards);
 const statistics = generateStatistics(filmCards);
-const { rank } = statistics;
-
+const {rank} = statistics;
 
 render(header, createProfileTemplate(rank));
 render(main, createMainNavigationTemplate());
@@ -48,7 +42,6 @@ render(filmList, createFilmsContainerTemplate());
 const filmListContainer = filmList.querySelector(`.films-list__container`);
 
 for (let i = 0; i < Math.min(filmCards.length, FILMS_COUNT_PER_STEP); i++) {
-  console.log('sdf')
   render(filmListContainer, createFilmCardTemplate(filmCards[i]));
 }
 
@@ -63,7 +56,9 @@ if (filmCards.length > FILMS_COUNT_PER_STEP) {
     evt.preventDefault();
     filmCards
       .slice(renderedFilmCardCount, renderedFilmCardCount + FILMS_COUNT_PER_STEP)
-      .forEach((filmCard) => render(filmListContainer, createFilmCardTemplate(filmCard)));
+      .forEach((filmCard) =>
+        render(filmListContainer, createFilmCardTemplate(filmCard))
+      );
 
     renderedFilmCardCount += FILMS_COUNT_PER_STEP;
 
@@ -75,12 +70,16 @@ if (filmCards.length > FILMS_COUNT_PER_STEP) {
 for (const [sectionTitle, extraFilms] of extraFilmCards) {
   if (extraFilms.length > 0) {
     render(filmsSection, createFilmsExtraTemplate(sectionTitle));
-    const filmsExtraContainers = filmsSection.querySelectorAll(`.films-list--extra`);
-    const filmsLastExtraContainer = filmsExtraContainers[filmsExtraContainers.length - 1];
+    const filmsExtraContainers = filmsSection.querySelectorAll(`.films-list--extra`
+    );
+    const filmsLastExtraContainer =
+      filmsExtraContainers[filmsExtraContainers.length - 1];
     render(filmsLastExtraContainer, createFilmsContainerTemplate());
-    const filmExtraListContainer = filmsLastExtraContainer.querySelector(`.films-list__container`);
-    extraFilms.forEach((extraFilm) => render(filmExtraListContainer, createFilmCardTemplate(extraFilm)));
+    const filmExtraListContainer = filmsLastExtraContainer.querySelector(`.films-list__container`
+    );
+    extraFilms.forEach((extraFilm) =>
+      render(filmExtraListContainer, createFilmCardTemplate(extraFilm))
+    );
   }
 }
 render(footer, createStatisticsFooterTemplate(filmAmount));
-

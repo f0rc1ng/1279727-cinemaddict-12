@@ -5,14 +5,14 @@ const getFirstLastIndices = (items) => (
 );
 const decomposeDuration = (duration) => {
   if (duration < MINUTES_IN_HOUR) {
-    return { minute: duration };
+    return {minute: duration};
   }
   if (!(duration % MINUTES_IN_HOUR)) {
-    return { hour: duration / MINUTES_IN_HOUR };
+    return {hour: duration / MINUTES_IN_HOUR};
   }
   const minute = duration % MINUTES_IN_HOUR;
   const hour = (duration - minute) / MINUTES_IN_HOUR;
-  return { hour, minute };
+  return {hour, minute};
 };
 
 const humanizeDuration = (duration, ...timeMarks) => {
@@ -32,4 +32,4 @@ const getWatchedFilms = (filmCards) => {
   return filmCards.filter((filmCard) => filmCard.isWatched);
 };
 
-export { humanizeDuration, getFirstLastIndices, getWatchedFilms };
+export {humanizeDuration, getFirstLastIndices, getWatchedFilms};

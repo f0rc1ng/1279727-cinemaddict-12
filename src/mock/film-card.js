@@ -1,5 +1,5 @@
-import { getFirstLastIndices } from "../utils/utils.js";
-import { getRandomInteger } from "./random.js";
+import {getFirstLastIndices} from "../utils/utils.js";
+import {getRandomInteger} from "./random.js";
 const TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus`;
 const FilmDescriptionSize = {
   MIN_SENTENCES: 1,
@@ -83,7 +83,7 @@ const generateGenres = () => {
 
 
 const getRandomDate = (yearRange) => {
-  const { MIN_YEAR: minYear, MAX_YEAR: maxYear } = yearRange;
+  const {MIN_YEAR: minYear, MAX_YEAR: maxYear} = yearRange;
   let dateParameters = [];
   dateParameters.push(getRandomInteger(minYear, maxYear));
   dateParameters.push(getRandomInteger(MonthRange.MIN_MONTH, MonthRange.MAX_MONTH));
@@ -142,4 +142,4 @@ const generateFilmCard = () => {
     }
   };
 };
-export { generateFilmCard };
+export {generateFilmCard};

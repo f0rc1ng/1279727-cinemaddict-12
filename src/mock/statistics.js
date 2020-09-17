@@ -1,4 +1,4 @@
-import { getWatchedFilms } from "../utils/utils";
+import {getWatchedFilms} from "../utils/utils";
 
 const getMostFrequentWatchedGenre = (watchedFilms) => {
   let counts = {};
@@ -6,8 +6,6 @@ const getMostFrequentWatchedGenre = (watchedFilms) => {
   let mostFrequent = ``;
 
   for (const watchedFilm of watchedFilms) {
-    console.log(counts)
-    console.log(watchedFilm)
     let film = watchedFilm;
     counts[film] = film in counts ? counts[film] + 1 : 1;
 
@@ -53,4 +51,4 @@ const generateStatistics = (filmCards) => {
   }
   return {};
 };
-export { generateStatistics };
+export {generateStatistics};
