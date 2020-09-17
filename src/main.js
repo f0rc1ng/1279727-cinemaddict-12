@@ -1,214 +1,86 @@
-import {createUserRankTemplate} from "./view/user-rank.js";
-import {createMenuTemplate} from "./view/menu.js";
-import {createFilmsListContainerTempalte} from "./view/film-list.js";
-import {createFilmCardTemplate} from "./view/film-card.js";
-import {createShowMoreButtonTemplate} from "./view/showmore-button.js";
-import {createExtraFilmsContainerTemplate} from "./view/extra-films.js";
-import {createFilmsCountTemplate} from "./view/films-count.js";
+import { createFilmCardTemplate } from "./view/film-card.js";
+import { createProfileTemplate } from "./view/profile.js";
+import { createStatisticsFooterTemplate } from "./view/statistics-footer.js";
+import { createSortingTemplate } from "./view/sorting.js";
+import { createMainNavigationTemplate } from "./view/mainnavigation.js";
+import { createStatisticsItemTemplate } from "./view/statistics-item.js";
+import { createFilterTemplate } from "./view/filter.js";
+import { createFilmsTemplate } from "./view/films.js";
+import { createFilmsListTemplate } from "./view/films-list.js";
+import { createFilmsContainerTemplate } from "./view/films-container.js";
+import { createShowMoreButtonTemplate } from "./view/show-more-button.js";
+import { render } from "./utils/dom.js";
+import { generateFilmCard } from "./mock/film-card.js";
+import { createFilmsExtraTemplate } from "./view/films-extra.js";
+import { findFilmsExtra } from "./mock/films-extra.js";
+import { generateFilter } from "./mock/filter.js";
+import { generateStatistics } from "./mock/statistics.js";
 
-const FILMS_COUNT = 5;
-const EXTRA_FILMS_COUNT = 2;
 
-const TOP_RATED_BLOCK_TITLE = `Top rated`;
-const MOST_COMMENTED_BLOCK_TITLE = `Most commented`;
+const FILMS_COUNT = 20;
+const FILMS_COUNT_PER_STEP = 5;
+const header = document.querySelector(`.header`);
+const main = document.querySelector(`.main`);
+const footer = document.querySelector(`.footer`);
+const filmCards = new Array(FILMS_COUNT).fill().map(generateFilmCard);
 
-const FILMS_LIST_CONTAINER_SELECTOR = `.films-list__container`;
+console.log(filmCards);
 
-// const createFilmDetailsCardTemplate = () => {
-//   return (
-//     `<form class="film-details__inner" action="" method="get">
-//     <div class="form-details__top-container">
-//       <div class="film-details__close">
-//         <button class="film-details__close-btn" type="button">close</button>
-//       </div>
-//       <div class="film-details__info-wrap">
-//         <div class="film-details__poster">
-//           <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
-//           <p class="film-details__age">18+</p>
-//         </div>
-//         <div class="film-details__info">
-//           <div class="film-details__info-head">
-//             <div class="film-details__title-wrap">
-//               <h3 class="film-details__title">The Great Flamarion</h3>
-//               <p class="film-details__title-original">Original: The Great Flamarion</p>
-//             </div>
-//             <div class="film-details__rating">
-//               <p class="film-details__total-rating">8.9</p>
-//             </div>
-//           </div>
-//           <table class="film-details__table">
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Director</td>
-//               <td class="film-details__cell">Anthony Mann</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Writers</td>
-//               <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Actors</td>
-//               <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Release Date</td>
-//               <td class="film-details__cell">30 March 1945</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Runtime</td>
-//               <td class="film-details__cell">1h 18m</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Country</td>
-//               <td class="film-details__cell">USA</td>
-//             </tr>
-//             <tr class="film-details__row">
-//               <td class="film-details__term">Genres</td>
-//               <td class="film-details__cell">
-//                 <span class="film-details__genre">Drama</span>
-//                 <span class="film-details__genre">Film-Noir</span>
-//                 <span class="film-details__genre">Mystery</span></td>
-//             </tr>
-//           </table>
-//           <p class="film-details__film-description">
-//             The film opens following a murder at a cabaret in Mexico City in 1936, and then presents the events leading up to it in flashback. The Great Flamarion (Erich von Stroheim) is an arrogant, friendless, and misogynous marksman who displays his trick gunshot act in the vaudeville circuit. His show features a beautiful assistant, Connie (Mary Beth Hughes) and her drunken husband Al (Dan Duryea), Flamarion's other assistant. Flamarion falls in love with Connie, the movie's femme fatale, and is soon manipulated by her into killing her no good husband during one of their acts.
-//           </p>
-//         </div>
-//       </div>
-//       <section class="film-details__controls">
-//         <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-//         <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
-//         <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-//         <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
-//         <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-//         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
-//       </section>
-//     </div>
-//     <div class="form-details__bottom-container">
-//       <section class="film-details__comments-wrap">
-//         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
-//         <ul class="film-details__comments-list">
-//           <li class="film-details__comment">
-//             <span class="film-details__comment-emoji">
-//               <img src="./images/emoji/smile.png" width="55" height="55" alt="emoji-smile">
-//             </span>
-//             <div>
-//               <p class="film-details__comment-text">Interesting setting and a good cast</p>
-//               <p class="film-details__comment-info">
-//                 <span class="film-details__comment-author">Tim Macoveev</span>
-//                 <span class="film-details__comment-day">2019/12/31 23:59</span>
-//                 <button class="film-details__comment-delete">Delete</button>
-//               </p>
-//             </div>
-//           </li>
-//           <li class="film-details__comment">
-//             <span class="film-details__comment-emoji">
-//               <img src="./images/emoji/sleeping.png" width="55" height="55" alt="emoji-sleeping">
-//             </span>
-//             <div>
-//               <p class="film-details__comment-text">Booooooooooring</p>
-//               <p class="film-details__comment-info">
-//                 <span class="film-details__comment-author">John Doe</span>
-//                 <span class="film-details__comment-day">2 days ago</span>
-//                 <button class="film-details__comment-delete">Delete</button>
-//               </p>
-//             </div>
-//           </li>
-//           <li class="film-details__comment">
-//             <span class="film-details__comment-emoji">
-//               <img src="./images/emoji/puke.png" width="55" height="55" alt="emoji-puke">
-//             </span>
-//             <div>
-//               <p class="film-details__comment-text">Very very old. Meh</p>
-//               <p class="film-details__comment-info">
-//                 <span class="film-details__comment-author">John Doe</span>
-//                 <span class="film-details__comment-day">2 days ago</span>
-//                 <button class="film-details__comment-delete">Delete</button>
-//               </p>
-//             </div>
-//           </li>
-//           <li class="film-details__comment">
-//             <span class="film-details__comment-emoji">
-//               <img src="./images/emoji/angry.png" width="55" height="55" alt="emoji-angry">
-//             </span>
-//             <div>
-//               <p class="film-details__comment-text">Almost two hours? Seriously?</p>
-//               <p class="film-details__comment-info">
-//                 <span class="film-details__comment-author">John Doe</span>
-//                 <span class="film-details__comment-day">Today</span>
-//                 <button class="film-details__comment-delete">Delete</button>
-//               </p>
-//             </div>
-//           </li>
-//         </ul>
-//         <div class="film-details__new-comment">
-//           <div for="add-emoji" class="film-details__add-emoji-label"></div>
-//           <label class="film-details__comment-label">
-//             <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-//           </label>
-//           <div class="film-details__emoji-list">
-//             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-//             <label class="film-details__emoji-label" for="emoji-smile">
-//               <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-//             </label>
-//             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-//             <label class="film-details__emoji-label" for="emoji-sleeping">
-//               <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-//             </label>
-//             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-//             <label class="film-details__emoji-label" for="emoji-puke">
-//               <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-//             </label>
-//             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-//             <label class="film-details__emoji-label" for="emoji-angry">
-//               <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-//             </label>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   </form>`
-//   );
-// };
+const extraFilmCards = findFilmsExtra(filmCards);
+// 111
+const filmAmount = filmCards.length;
+const filters = generateFilter(filmCards);
+const statistics = generateStatistics(filmCards);
+const { rank } = statistics;
 
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
 
-const renderFilmCard = (container, cardsCount) => {
-  for (let i = 0; i < cardsCount; i++) {
-    render(container, createFilmCardTemplate(), `beforeend`);
+render(header, createProfileTemplate(rank));
+render(main, createMainNavigationTemplate());
+const mainNavigation = main.querySelector(`.main-navigation`);
+render(mainNavigation, createFilterTemplate(filters));
+render(mainNavigation, createStatisticsItemTemplate());
+render(main, createSortingTemplate());
+render(main, createFilmsTemplate());
+const filmsSection = main.querySelector(`.films`);
+render(filmsSection, createFilmsListTemplate());
+const filmList = filmsSection.querySelector(`.films-list`);
+render(filmList, createFilmsContainerTemplate());
+const filmListContainer = filmList.querySelector(`.films-list__container`);
+
+for (let i = 0; i < Math.min(filmCards.length, FILMS_COUNT_PER_STEP); i++) {
+  console.log('sdf')
+  render(filmListContainer, createFilmCardTemplate(filmCards[i]));
+}
+
+if (filmCards.length > FILMS_COUNT_PER_STEP) {
+  let renderedFilmCardCount = FILMS_COUNT_PER_STEP;
+
+  render(filmList, createShowMoreButtonTemplate());
+
+  const loadMoreButton = filmList.querySelector(`.films-list__show-more`);
+
+  loadMoreButton.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    filmCards
+      .slice(renderedFilmCardCount, renderedFilmCardCount + FILMS_COUNT_PER_STEP)
+      .forEach((filmCard) => render(filmListContainer, createFilmCardTemplate(filmCard)));
+
+    renderedFilmCardCount += FILMS_COUNT_PER_STEP;
+
+    if (renderedFilmCardCount >= filmCards.length) {
+      loadMoreButton.remove();
+    }
+  });
+}
+for (const [sectionTitle, extraFilms] of extraFilmCards) {
+  if (extraFilms.length > 0) {
+    render(filmsSection, createFilmsExtraTemplate(sectionTitle));
+    const filmsExtraContainers = filmsSection.querySelectorAll(`.films-list--extra`);
+    const filmsLastExtraContainer = filmsExtraContainers[filmsExtraContainers.length - 1];
+    render(filmsLastExtraContainer, createFilmsContainerTemplate());
+    const filmExtraListContainer = filmsLastExtraContainer.querySelector(`.films-list__container`);
+    extraFilms.forEach((extraFilm) => render(filmExtraListContainer, createFilmCardTemplate(extraFilm)));
   }
-};
+}
+render(footer, createStatisticsFooterTemplate(filmAmount));
 
-const findContainerInExtraFilmsBlockByTitle = (title) => {
-  return Array.from(document.querySelectorAll(`.films-list--extra`)
-  ).filter((el) => el.innerText.includes(title))[0];
-};
-
-const pageHeaderElement = document.querySelector(`.header`);
-render(pageHeaderElement, createUserRankTemplate(), `beforeend`);
-
-const pageMainElement = document.querySelector(`.main`);
-render(pageMainElement, createMenuTemplate(), `beforeend`);
-render(pageMainElement, createFilmsListContainerTempalte(), `beforeend`);
-
-const pageMainFilmsContainer = pageMainElement.querySelector(`.films`);
-const pageFilmsListContainerElement = pageMainFilmsContainer.querySelector(FILMS_LIST_CONTAINER_SELECTOR);
-renderFilmCard(pageFilmsListContainerElement, FILMS_COUNT);
-
-const pageFilmsListElement = pageMainFilmsContainer.querySelector(`.films-list`);
-render(pageFilmsListElement, createShowMoreButtonTemplate(), `beforeend`);
-
-render(pageMainFilmsContainer, createExtraFilmsContainerTemplate(TOP_RATED_BLOCK_TITLE), `beforeend`);
-const pageTopRatedFilmsListElement = findContainerInExtraFilmsBlockByTitle(TOP_RATED_BLOCK_TITLE);
-const pageTopRatedFilmsContainerElement = pageTopRatedFilmsListElement.querySelector(FILMS_LIST_CONTAINER_SELECTOR);
-renderFilmCard(pageTopRatedFilmsContainerElement, EXTRA_FILMS_COUNT);
-
-render(pageMainFilmsContainer, createExtraFilmsContainerTemplate(MOST_COMMENTED_BLOCK_TITLE), `beforeend`);
-const pageMostCommentedFilmsListElement = findContainerInExtraFilmsBlockByTitle(MOST_COMMENTED_BLOCK_TITLE);
-const pageMostCommentedFilmsContainerElement = pageMostCommentedFilmsListElement.querySelector(FILMS_LIST_CONTAINER_SELECTOR);
-renderFilmCard(pageMostCommentedFilmsContainerElement, EXTRA_FILMS_COUNT);
-
-const pageFooterElement = document.querySelector(`.footer`);
-const pageFooterStatisticsElement = pageFooterElement.querySelector(`.footer__statistics`);
-render(pageFooterStatisticsElement, createFilmsCountTemplate(), `beforeend`);
