@@ -76,6 +76,37 @@ export default class FilmPresenter {
     }
   }
 
+  setViewState(state, comment) {
+    const resetFormState = () => {
+      this._filmPopupComponent.updateData({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false
+      });
+    };
+
+    switch (state) {
+      case State.SAVING:
+        this._filmPopupComponent.updateData({
+          isDisabled: true,
+          isSaving: true
+        }, true);
+        break;
+      case State.DELETING:
+        this._filmPopupComponent.setDeletingComment(comment);
+        this._filmPopupComponent.updateData({
+          isDisabled: true,
+          isDeleting: true
+        });
+        break;
+      case State.ABORTING:
+        if (this._mode === Mode.OPENED) {
+          this._filmPopupComponent.setShakeAnimation(resetFormState);
+        }
+        break;
+    }
+  }
+
   destroy(isPopupOpenned = false) {
     remove(this._filmComponent);
     if (!isPopupOpenned) {
@@ -173,36 +204,5 @@ export default class FilmPresenter {
         UserAction.ADD_COMMENT,
         UpdateType.MINOR,
         film);
-  }
-
-  setViewState(state, comment) {
-    const resetFormState = () => {
-      this._filmPopupComponent.updateData({
-        isDisabled: false,
-        isSaving: false,
-        isDeleting: false
-      });
-    };
-
-    switch (state) {
-      case State.SAVING:
-        this._filmPopupComponent.updateData({
-          isDisabled: true,
-          isSaving: true
-        }, true);
-        break;
-      case State.DELETING:
-        this._filmPopupComponent.setDeletingComment(comment);
-        this._filmPopupComponent.updateData({
-          isDisabled: true,
-          isDeleting: true
-        });
-        break;
-      case State.ABORTING:
-        if (this._mode === Mode.OPENED) {
-          this._filmPopupComponent.setShakeAnimation(resetFormState);
-        }
-        break;
-    }
   }
 }

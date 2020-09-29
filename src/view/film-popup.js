@@ -1,7 +1,7 @@
 import DetailsDescription from './details-description.js';
 import DetailsComments from './details-comments.js';
 import Smart from './smart.js';
-import {emojiMap, ENTER_CODE, ESC_CODE} from '../const.js';
+import {EmojiMap, ENTER_CODE, ESC_CODE} from '../const.js';
 
 const createSiteFilmDetailsPopup = (data, deletingComment) => {
   const {comments, userEmoji, isDisabled, isDeleting, isSaving} = data;
@@ -25,6 +25,7 @@ export default class FilmPopup extends Smart {
     this._data = FilmPopup.parseFilmToData(data);
     this._deletingComment = null;
     this._userText = null;
+    this._commentInputElement = this.getElement().querySelector(`.film-details__comment-input`);
     this._createComment = this._createComment.bind(this);
     this._onCloseButtonClick = this._onCloseButtonClick.bind(this);
     this._keyDownHandler = this._keyDownHandler.bind(this);
@@ -53,8 +54,8 @@ export default class FilmPopup extends Smart {
       const commentIndex = this._data.comments[index];
       return this._deleteClickHandler(commentIndex);
     }));
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`input`, this._setUserText);
-    this.getElement().querySelector(`.film-details__comment-input`).addEventListener(`keydown`, this._addCommentKeyDown);
+    this._commentInputElement.addEventListener(`input`, this._setUserText);
+    this._commentInputElement.addEventListener(`keydown`, this._addCommentKeyDown);
   }
 
   reset(film) {
@@ -80,7 +81,9 @@ export default class FilmPopup extends Smart {
   _onCloseButtonClick(evt) {
     evt.preventDefault();
     this._callback.click();
+    this._commentInputElement.value = ``;
   }
+
 
   setCloseClickHandler(callback) {
     this._callback.click = callback;
@@ -186,7 +189,7 @@ export default class FilmPopup extends Smart {
       text,
       date: new Date(),
       emoji,
-      img: emojiMap[emoji],
+      img: EmojiMap[emoji],
     };
   }
 
@@ -250,6 +253,9 @@ export default class FilmPopup extends Smart {
     this._deletingComment = comment;
   }
 
+  _clearComment() {
+
+  }
 
   setAborting() {
     const resetFormState = () => {

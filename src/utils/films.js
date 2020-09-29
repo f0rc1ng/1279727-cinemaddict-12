@@ -43,7 +43,7 @@ export const formatDateComment = (date) => {
   return moment(date).calendar(null, {
     sameDay: `[Today]`,
     lastDay: `[Yesterday]`,
-    sameElse: `L HH:mm:ss`
+    sameElse: `DD/MM/YYYY HH:mm:ss`
   });
 };
 

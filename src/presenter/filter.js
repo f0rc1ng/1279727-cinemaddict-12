@@ -41,6 +41,16 @@ export default class Filter {
 
   }
 
+  setMenuClickHandler(callback) {
+    this._menuClickHandler = callback;
+    this._siteNavComponent.setMenuClickHandler(callback);
+  }
+
+  turnOnFilters() {
+    this._isDisable = false;
+    this.init();
+  }
+
   _restoreHandlers() {
     this._siteNavComponent.setMenuClickHandler(this._menuClickHandler);
   }
@@ -77,15 +87,5 @@ export default class Filter {
         count: filter[FilterType.FAVORITES](films).length
       },
     ];
-  }
-
-  setMenuClickHandler(callback) {
-    this._menuClickHandler = callback;
-    this._siteNavComponent.setMenuClickHandler(callback);
-  }
-
-  turnOnFilters() {
-    this._isDisable = false;
-    this.init();
   }
 }

@@ -7,7 +7,7 @@ export const SortType = {
   RATING: `rating`
 };
 
-export const emojiMap = {
+export const EmojiMap = {
   smile: `./images/emoji/smile.png`,
   puke: `./images/emoji/puke.png`,
   sleeping: `./images/emoji/sleeping.png`,

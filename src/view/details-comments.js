@@ -1,6 +1,6 @@
 import AbstractView from './abstract.js';
 import {formatDateComment} from '../utils/films.js';
-import {emojiMap} from '../const.js';
+import {EmojiMap} from '../const.js';
 import he from "he";
 
 const createComments = (comments, deletingComment, isDisabled, isDeleting) => {
@@ -14,14 +14,16 @@ const createComments = (comments, deletingComment, isDisabled, isDeleting) => {
     const comment =
     `<li class="film-details__comment">
       <span class="film-details__comment-emoji">
-      <img src="${emojiMap[comments[i].emoji]}" width="55" height="55" alt="emoji-${comments[i].emoji}">
+        <img src="${EmojiMap[comments[i].emoji]}" width="55" height="55" alt="emoji-${comments[i].emoji}">
       </span>
       <div>
         <p class="film-details__comment-text">${he.encode(comments[i].text)}</p>
         <p class="film-details__comment-info">
           <span class="film-details__comment-author">${comments[i].name}</span>
           <span class="film-details__comment-day">${formatDateComment(comments[i].date)}</span>
-          <button class="film-details__comment-delete" ${isDisabled || isDeleting ? `disabled` : ``}>${isDeleting && comments[i].id === deletingComment.id ? `deleting...` : `delete`}</button>
+          <button class="film-details__comment-delete" ${isDisabled || isDeleting ? `disabled` : ``}>
+            ${isDeleting && comments[i].id === deletingComment.id ? `deleting...` : `delete`}
+          </button>
         </p>
       </div>
     </li>`;
@@ -31,7 +33,7 @@ const createComments = (comments, deletingComment, isDisabled, isDeleting) => {
 };
 
 const createUserEmojiTemplate = (userEmoji) => {
-  return userEmoji === `` ? `` : `<img src="${emojiMap[userEmoji]}" width="55" height="55" alt="emoji-smile">`;
+  return userEmoji === `` ? `` : `<img src="${EmojiMap[userEmoji]}" width="55" height="55" alt="emoji-smile">`;
 };
 
 const createFilmDetailsComments = (comments, userEmoji, deletingCommentId, isDisabled, isDeleting, isSaving) => {
